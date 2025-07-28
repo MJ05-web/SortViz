@@ -1,4 +1,38 @@
-import React from 'react';
+// components/Controls.js
+import React, { useState } from 'react';
+
+const algorithmComplexities = {
+  bubbleSort: {
+    name: "Bubble Sort",
+    best: "O(n)",
+    average: "O(n^2)",
+    worst: "O(n^2)",
+  },
+  selectionSort: {
+    name: "Selection Sort",
+    best: "O(n^2)",
+    average: "O(n^2)",
+    worst: "O(n^2)",
+  },
+  insertionSort: {
+    name: "Insertion Sort",
+    best: "O(n)",
+    average: "O(n^2)",
+    worst: "O(n^2)",
+  },
+  mergeSort: {
+    name: "Merge Sort",
+    best: "O(n log n)", 
+    average: "O(n log n)", 
+    worst: "O(n log n)", 
+  },
+  quickSort: {
+    name: "Quick Sort",
+    best: "O(n log n)", 
+    average: "O(n log n)", 
+    worst: "O(n^2)",
+  },
+};
 
 function Controls({
   generateArray,
@@ -16,24 +50,60 @@ function Controls({
   clearLogs,
   isSorting,
 }) {
+  const [hoveredAlgorithm, setHoveredAlgorithm] = useState(null);
+
+  const handleMouseEnter = (algoName) => {
+    setHoveredAlgorithm(algoName);
+  };
+
+  const handleMouseLeave = () => {
+    setHoveredAlgorithm(null);
+  };
+
   return (
     <div className="controls">
       <button onClick={generateArray} disabled={isSorting}>
         Generate New Array
       </button>
-      <button onClick={onBubbleSort} disabled={isSorting}>
+      {/* Add onMouseEnter and onMouseLeave to each sorting button */}
+      <button
+        onClick={onBubbleSort}
+        disabled={isSorting}
+        onMouseEnter={() => handleMouseEnter('bubbleSort')}
+        onMouseLeave={handleMouseLeave}
+      >
         Bubble Sort
       </button>
-      <button onClick={onSelectionSort} disabled={isSorting}>
+      <button
+        onClick={onSelectionSort}
+        disabled={isSorting}
+        onMouseEnter={() => handleMouseEnter('selectionSort')}
+        onMouseLeave={handleMouseLeave}
+      >
         Selection Sort
       </button>
-      <button onClick={onInsertionSort} disabled={isSorting}>
+      <button
+        onClick={onInsertionSort}
+        disabled={isSorting}
+        onMouseEnter={() => handleMouseEnter('insertionSort')}
+        onMouseLeave={handleMouseLeave}
+      >
         Insertion Sort
       </button>
-      <button onClick={onMergeSort} disabled={isSorting}>
+      <button
+        onClick={onMergeSort}
+        disabled={isSorting}
+        onMouseEnter={() => handleMouseEnter('mergeSort')}
+        onMouseLeave={handleMouseLeave}
+      >
         Merge Sort
       </button>
-      <button onClick={onQuickSort} disabled={isSorting}>
+      <button
+        onClick={onQuickSort}
+        disabled={isSorting}
+        onMouseEnter={() => handleMouseEnter('quickSort')}
+        onMouseLeave={handleMouseLeave}
+      >
         Quick Sort
       </button>
 
@@ -76,6 +146,16 @@ function Controls({
       <button onClick={clearLogs} disabled={isSorting}>
         Clear Logs
       </button>
+
+      {/* Conditionally render the complexity info card */}
+      {hoveredAlgorithm && (
+        <div className="complexity-info-card">
+          <h3>{algorithmComplexities[hoveredAlgorithm].name} Complexity</h3>
+          <p>Best: {algorithmComplexities[hoveredAlgorithm].best}</p>
+          <p>Average: {algorithmComplexities[hoveredAlgorithm].average}</p>
+          <p>Worst: {algorithmComplexities[hoveredAlgorithm].worst}</p>
+        </div>
+      )}
     </div>
   );
 }

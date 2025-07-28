@@ -66,13 +66,14 @@ function App() {
   const MAX_DELAY_MS = 5000;
   const MIN_DELAY_MS = 5;
 
+  const effectiveSpeed = animationSpeed === 100 ? 98 : animationSpeed;
+
   const delay = Math.round(
     MAX_DELAY_MS -
-    ((animationSpeed - MIN_ANIMATION_SPEED) *
+    ((effectiveSpeed - MIN_ANIMATION_SPEED) *
       (MAX_DELAY_MS - MIN_DELAY_MS) /
       (MAX_ANIMATION_SPEED - MIN_ANIMATION_SPEED))
   );
-
   const logMessage = useCallback((message) => {
     setLogs((prevLogs) => {
       const newLogs = [...prevLogs, message];
